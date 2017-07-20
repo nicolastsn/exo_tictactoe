@@ -35,20 +35,30 @@ class Board
 
 
 	def winner?
-		verticals = [[],[],[]]
-		cases.each do |c| 
 
-			verticals[0] 
-			verticals[1]
-			verticals[2]
+		h = []
+		v = [[],[],[]]
+		d = [[],[]]
+		a = @cases[0].keys
 
-			c = c.map { |e| e.tag }
-			return true if !c.include?(" ") && c.uniq.length == 1 
+		@cases.each_with_index do |c, i|  
+			v.each_index { |i| v[i] << c[a[i]].tag } 
 
-
+		 	h << c.values.map { |e| e.tag }  
+		 	d[0] << c[a[i]].tag
+		 	d[1] << c[a[2-i]].tag 
 		end
-	end
 
+		lines = h + v + d
+			
+		lines.each do |l|
+		 	return true if !l.include?(" ") && l.uniq.length == 1
+		end
+
+		false
+
+	end
+	
 
 
 	def render

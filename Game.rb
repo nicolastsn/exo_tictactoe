@@ -14,18 +14,16 @@ class Game
  		puts "Entrez le nom du joueur O :"
  		@playerO = Player.new gets.chomp
 
- 		
+ 		@turn = 0
+	
  	end
-
-
-
-
  	
  	def run
  		
  		print @board.render
 
  		begin 
+ 			@turn += 1
  			puts "---------------"
  			current_player = (current_player == @playerX ? @playerO : @playerX)
  			puts "Tour de #{current_player.name}, choisissez une case(ex: A1) :"
@@ -47,8 +45,15 @@ class Game
  			end 
  			puts "---------------"
  			print @board.render
- 		end until @board.winner?
- 		puts "---------------"
- 		puts "Le gagnant est #{current_player.name}"
+ 			puts "---------------"	
+
+ 			if b = @board.winner?
+ 				puts "Le gagnant est #{current_player.name}" 
+ 			elsif b = @turn >= 9 
+ 				puts "Match nul" 
+ 			end
+
+ 		end until b
+ 		
  	end
 end
